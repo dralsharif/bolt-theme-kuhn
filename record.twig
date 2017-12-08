@@ -1,0 +1,79 @@
+{% extends 'partials/_master.twig' %}
+
+{% block bodyClass %}{% endblock %}
+
+{% block main %}
+
+    <main id="main" class="site-main" role="main">
+
+        <article id="post-{{ record.id }}" class="post type-post hentry">
+
+            {% if record.image is not empty %}
+                <figure class="featured-image">
+                    <a href="{{ record.link }}" rel="bookmark">
+                        <img src="{{ thumbnail( record.image, 820, 547, 'r') }}" alt="{{ record.image.title|default('') }}">
+                    </a>
+                </figure><!-- .featured-image full-bleed -->
+            {% endif %}
+
+            <header class="entry-header">
+                <h1>{{ record.title }}</h1>
+            </header><!-- .entry-header -->
+
+            <div class="entry-meta">
+		        <span class="byline"> Written by
+                    <span class="author vcard">
+                        <a class="url fn n" href="#">{{ app['twig.runtime.bolt_user'].getUser( entry.ownerid ).displayname }}</a>
+                    </span>
+                </span>
+                <span class="posted-on">Published
+                    <a href="{{ entry.link }}" rel="bookmark">
+                        <time class="entry-date published" datetime="2017-08-10T09:58:38+00:00">{{ entry.datepublish|date('F j, Y') }}</time>
+                        <time class="updated" datetime="2017-08-10T09:59:07+00:00">{{ entry.datechanged|date('F j, Y') }}</time>
+                    </a>
+                </span>
+
+            </div><!-- .entry-meta -->
+
+            <div class="entry-content">
+                {{ record.body }}
+            </div><!-- .entry-content -->
+            {% if record.taxonomy.tags is defined %}
+                <footer class="entry-footer">
+                    <span class="tags-links">Tagged
+                        {% for url, tag in record.taxonomy.tags %}
+                            <a href="{{ url }}" rel="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </span>
+                </footer><!-- .entry-footer -->
+            {% endif %}
+        </article><!-- #post-## -->
+
+        {% if record.next() is defined and record.next() is not empty %}
+            {% set recordNext = record.next() %}
+        {% endif %}
+
+        {% if record.previous() is defined and record.previous() is not empty %}
+            {% set recordPrevious = record.previous() %}
+        {% endif %}
+
+        {% if recordNext is defined or recordPrevious is defined %}
+            <nav class="navigation post-navigation" role="navigation">
+                <h2 class="screen-reader-text">Post navigation</h2>
+                <div class="nav-links">
+                    {% if recordPrevious is not empty %}
+                        <div class="nav-previous">
+                            <a href="{{ recordPrevious.link }}" rel="prev">{{ recordPrevious.title }}</a>
+                        </div>
+                    {% endif %}
+                    {% if recordNext is defined %}
+                        <div class="nav-next">
+                            <a href="{{ recordNext.link }}" rel="next">{{ recordNext.title }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </nav>
+        {% endif %}
+    </main>
+
+{% endblock main %}

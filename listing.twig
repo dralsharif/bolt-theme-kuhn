@@ -1,0 +1,96 @@
+{# This template is used for 'listings': Generic pages that list a number of
+records from a certain contenttype. These records are available as an array
+called 'records'. In the for-loop below, we iterate over the records that
+are on this page. It can be used for overview pages like 'all entries', or
+'all records tagged with kittens'. #}
+
+{% extends 'partials/_master.twig' %}
+
+{% block bodyClass %}archive-view{% endblock %}
+
+{% block main %}
+    <main id="main" class="site-main" role="main">
+
+        {# If used for listing a taxonomy, we add a heading.: #}
+        {% if taxonomytype is defined %}
+            <header class="page-header">
+                <h1 class="page-title">
+                    {{ __('general.phrase.overview-for') }}:
+                    {% if taxonomy.options[slug] is defined %}
+                        <span>{{ taxonomy.options[slug] }}</span>
+                    {% else %}
+                        <span>{{ slug }}</span>
+                    {% endif %}
+                </h1>
+            </header><!-- .page-header -->
+
+            {# Taxonomies are fetched unordered by design except if 'has_sortorder'
+            is set to true. This way we keep 'grouping' intact in the listing. #}
+            {% if not taxonomy.has_sortorder %}
+                {# If we specified an order in config.yml, sort them here, accordingly: #}
+                {% set records = records|order(config.get('general/listing_sort')) %}
+            {% endif %}
+        {% endif %}
+
+        {{ pager('', 3, 'partials/prev_sub_pager.twig' ) }}
+
+        {% for record in records %}
+            <article id="post-{{ record.id }}" class="post-{{ record.id }} post type-post format-standard hentry">
+
+                {% if record.image is not empty %}
+                    <figure class="featured-image">
+                        <a href="{{ record.link }}" rel="bookmark">
+                            <img src="{{ thumbnail( record.image, 433, 248, 'c') }}" alt="{{ record.image.title|default('') }}">
+                        </a>
+                    </figure><!-- .featured-image full-bleed -->
+                {% endif %}
+
+                <header class="entry-header">
+                    {# TODO: Implement properly the function below #}
+                    {% if record.taxonomy.categories is defined %}
+                        <div class="cat-links">
+                            {% for entryCategoryLink, entryCategory in record.taxonomy.categories %}
+                                <a href="{{ entryCategoryLink }}" rel="category tag">{{ entryCategory }}</a>
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                        <h2 class="entry-title">
+                            <a href="{{ record.link }}" rel="bookmark">'{{ record.title }}'</a>
+                        </h2>
+                </header><!-- .entry-header -->
+
+                <div class="entry-meta">
+                    <span class="byline"> Written by
+                        <span class="author vcard">
+                            <a class="url fn n" href="{{ record.link }}">{{ app['twig.runtime.bolt_user'].getUser( record.ownerid ).displayname }}</a>
+                        </span>
+                    </span>
+                    <span class="posted-on">Published
+                        <a href="{{ record.link }}" rel="bookmark">
+                            <time class="entry-date published" datetime="2017-08-10T09:58:38+00:00">{{ record.datepublish|date('F j, Y') }}</time>
+                            <time class="updated" datetime="2017-08-10T09:59:07+00:00">{{ record.datechanged|date('F j, Y') }}</time>
+                        </a>
+                    </span>
+                </div><!-- .entry-meta -->
+
+                <div class="entry-content">
+                    <p>{{ record.teaser|excerpt('250') }}</p>
+                </div><!-- .entry-content -->
+
+            </article><!-- #post-## -->
+
+        {% else %}
+            <article>
+                <h2>{{ __('general.phrase.no-content-found') }}</h2>
+                <p>
+                    {{ __("Unfortunately, no content could be found. Try another page, or go to the <a href=\"%paths_root%\">homepage</a>.", {'%paths_root%': path('homepage')} ) }}
+                </p>
+            </article>
+        {% endfor %}
+
+        {{ pager('', 3, 'partials/next_sub_pager.twig' ) }}
+
+    </main>
+
+{% endblock main %}

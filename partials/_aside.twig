@@ -1,0 +1,66 @@
+<!-- Sidebar -->
+<aside id="secondary" class="widget-area" role="complementary">
+
+    {# Recent pages #}
+    <section class="widget widget_kuhn_recent_posts">
+        <h2 class="widget-title">Recent pages</h2>
+        <ul class="kuhn-widget-list">
+
+            {% setcontent pages = "pages" limit 5 %}
+            {% for page in pages %}
+                <li>
+                    <a href="{{ page.link }}" title="{{ page.title }}">
+                        {% if page.image is not empty %}
+                            <div class="post-icon" aria-hidden="true">
+                                <img width="150" height="150" src="{{ page.image|thumbnail(50, 50) }}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" sizes="(min-width: 990px) 955px, (min-width: 1300px) 966px, 95vw">
+                            </div>
+                        {% endif %}
+                        <p class="title">{{ page.title }}</p>
+                        <p class="meta">{{ page.datepublish|date('F j, Y') }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+
+        </ul>
+
+    </section>
+
+    {# Recent entries #}
+    <section class="widget widget widget_kuhn_recent_comments">
+        <h2 class="widget-title">Recent entries</h2>
+        <ul class="kuhn-widget-list">
+
+            {% setcontent entries = "entries" limit 5 %}
+            {% for entry in entries %}
+                <li>
+                    <a href="{{ entry.link }}" title="{{ entry.title }}">
+                        {% if entry.image is not empty  %}
+                            <div class="post-icon" aria-hidden="true">
+                                <img width="150" height="150" src="{{ entry.image|thumbnail(50, 50) }}" class="attachment-thumbnail size-thumbnail wp-post-image" alt="" sizes="(min-width: 990px) 955px, (min-width: 1300px) 966px, 95vw">
+                            </div>
+                        {% endif %}
+                        <p class="title">{{ entry.title }}</p>
+                        <p class="meta">{{ entry.datepublish|date('F j, Y') }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+
+        </ul>
+
+    </section>
+
+    {# Search form #}
+    <section id="search-3" class="widget widget_search">
+
+        <form method="get" class="search-form" action="{{ path('search') }}" id="searchform-inline" enctype="text/plain">
+            <label>
+                <span class="screen-reader-text">Search for:</span>
+                <input type="search" class="search-field" value="{% if search is defined %}{{ search|escape }}{% endif %}" placeholder="{{ __('general.phrase.search-ellipsis') }}" name="search">
+            </label>
+            <input type="submit" class="search-submit" value="Search">
+        </form>
+
+    </section>
+</aside>
+
+<!-- End Sidebar -->

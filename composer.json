@@ -1,0 +1,30 @@
+{
+    "name": "nestordedios/bolt-theme-kuhn",
+    "description": "Kuhn - A theme based on CSS Grid layout.",
+    "type": "bolt-theme",
+    "keywords": ["theme", "kuhn", "responsive", "template", "layout", "grid", "modern", "css"],
+    "require": {
+        "bolt/bolt": "^3.0"
+    },
+    "license": "GNU GPL v2",
+    "authors": [
+        {
+            "name": "Nestor de Dios Fernandez",
+            "email": "nestordedios@outlook.es"
+        },
+        {
+            "name": "Morten Rand-Hendriksen",
+            "email": "morten@mor10.com"
+        }
+    ],
+    "extra": {
+        "bolt-screenshots": [
+            "screenshots/desktop-homepage.png",
+            "screenshots/detail-page-desktop.png",
+            "screenshots/footer-desktop.png",
+            "screenshots/detail-page-mobile.png",
+            "screenshots/menu-mobile.png",
+            "screenshots/listing-desktop.png"
+        ]
+    }
+}

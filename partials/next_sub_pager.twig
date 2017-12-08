@@ -1,0 +1,19 @@
+{# Template to print next pagination button #}
+
+{% set link = pager.makelink() %}
+
+{% if pager.count > 0 %}
+
+    {% if pager.current != pager.totalpages %}
+
+            {% set nextRecords = true %}
+            <nav class="navigation posts-navigation nav-previous" role="navigation">
+                <h2 class="screen-reader-text">Posts navigation</h2>
+                <div class="nav-links">
+                    <a href="{{link}}{{pager.current+1}}">Older posts</a>
+                </div>
+            </nav>
+
+    {% endif %}
+
+{% endif %}
