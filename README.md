@@ -1,5 +1,7 @@
 # Kuhn
 
+![Preview](screenshots/desktop-homepage.png)
+
 Kuhn is a theme based on CSS Grid layout designed and developed by [Morten Rand-Hendriksen](https://mor10.com) and ported to Bolt. Kuhn is hyper-opinionated and developed to take advantage of modern CSS. It was developed for mor10.com and is released as a showcase of what CSS Grid can do for theme layouts.
 
 **Note:**  This is for Bolt 3.
