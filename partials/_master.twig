@@ -9,7 +9,7 @@
                 {{ config.get('general/sitename') -}}
             {% if record.title is not defined and config.get('general/payoff') %} | {{ config.get('general/payoff') }}{% endif -%}
         </title>
-        <link rel="stylesheet" href="{{ asset('css/style.css', 'theme') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css', 'theme') }}">
         {% block headincludes %}
         {% endblock headincludes %}
     </head>
@@ -53,9 +53,9 @@
 
         {% endblock body %}
 
-        <script src="{{ asset('js/jquery.min.js', 'theme') }}"></script>
-        <script src="{{ asset('js/navigation.js', 'theme') }}"></script>
-        <script src="{{ asset('js/skip-link-focus-fix.js', 'theme') }}"></script>
+        <script src="{{ asset('assets/js/jquery.min.js', 'theme') }}"></script>
+        <script src="{{ asset('assets/js/navigation.js', 'theme') }}"></script>
+        <script src="{{ asset('assets/js/skip-link-focus-fix.js', 'theme') }}"></script>
 
         {% block bottomincludes %}
         {% endblock bottomincludes %}
